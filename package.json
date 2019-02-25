@@ -1,6 +1,6 @@
 {
-  "name": "vue-img-lazy-load",
-  "version": "1.0.0",
+  "name": "vue-images-lazy-load",
+  "version": "1.0.4",
   "description": "Vue plug-in for images lazy loading",
   "keywords": [
     "vue",
@@ -16,6 +16,9 @@
   "scripts": {
     "build": "rollup --config rollup.config.js"
   },
+  "files": [
+    "dist"
+  ],
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"

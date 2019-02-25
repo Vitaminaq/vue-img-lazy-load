@@ -587,7 +587,7 @@
 	    }
 	};
 	var directive = {
-	    inserted: function (el, binding, vnode) {
+	    bind: function (el, binding, vnode) {
 	        polymerization(el, binding, vnode);
 	    },
 	    unbind: function unbind(el) {
@@ -597,12 +597,12 @@
 	        delete el.oberserDom;
 	    }
 	};
-	var plugin = {
+	var VueImgLazyLoad = {
 	    install: function install(Vue) {
 	        Vue.directive('img-lazy-load', directive);
 	    }
 	};
 
-	return plugin;
+	return VueImgLazyLoad;
 
 }));

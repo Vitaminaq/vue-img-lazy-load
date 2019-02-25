@@ -10,9 +10,12 @@ npm install vue-images-lazy-load --save
 ### 使用/Use
 #### main.js
 ```bash
-import VueImgLazyLoad from 'vue-img-lazy-load';
+import VueImgLazyLoad from 'vue-images-lazy-load';
 Vue.use(VueImgLazyLoader);
 ```
+最开始的名字有冲突，所以使用了vue-images-lazy-load  
+The initial name was conflicting, so vue-images-lazy-load was used.
+
 #### *.vue
 ##### 使用默认配置/use default config
 ```bash

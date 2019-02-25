@@ -119,10 +119,10 @@ const directive: any = {
 	}
 };
 
-const plugin = {
+const VueImgLazyLoad = {
 	install(Vue: VueConstructor) {
 		Vue.directive('img-lazy-load', directive);
 	}
 };
 
-export default plugin;
+export default VueImgLazyLoad;
