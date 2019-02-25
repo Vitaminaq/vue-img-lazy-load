@@ -105,7 +105,7 @@ const polymerization = (
 	}
 };
 const directive: any = {
-	inserted: function(
+	bind: function(
 		el: DirectiveHTMLElement,
 		binding: Binding,
 		vnode: VNode
@@ -121,7 +121,7 @@ const directive: any = {
 
 const plugin = {
 	install(Vue: VueConstructor) {
-		Vue.directive('dom-lazy-load', directive);
+		Vue.directive('img-lazy-load', directive);
 	}
 };
 

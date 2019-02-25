@@ -1,5 +1,3 @@
-import VueDomLazyLoad from './vue-dom-lazy-load';
-// import ObserverInview from './observer-inview';
+import VueImgLazyLoad from './vue-img-lazy-load';
 
-// export { ObserverInview };
-export default VueDomLazyLoad;
+export default VueImgLazyLoad;
