@@ -15,7 +15,8 @@ const callback = (entire: IntersectionObserverEntry[]) => {
 		if (item.isIntersecting || item.intersectionRatio > 0) {
 			const src = item.target.getAttribute('data-lazy');
 			if (item.target.src === src) return;
-			const key = `key${index + 1}`;
+			const key = `key${index + 1}${item.intersectionRect.top}
+			    ${item.intersectionRect.y}${item.time}`;
 			timers[key] = setTimeout(() => {
 				item.target.src = src;
 				clearTimeout(timers[key]);

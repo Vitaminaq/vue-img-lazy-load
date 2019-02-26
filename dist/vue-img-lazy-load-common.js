@@ -520,7 +520,7 @@ var callback = function (entire) {
             var src = item.target.getAttribute('data-lazy');
             if (item.target.src === src)
                 { return; }
-            var key = "key" + (index + 1);
+            var key = "key" + (index + 1) + (item.intersectionRect.top) + "\n\t\t\t    " + (item.intersectionRect.y) + (item.time);
             timers[key] = setTimeout(function () {
                 item.target.src = src;
                 clearTimeout(timers[key]);

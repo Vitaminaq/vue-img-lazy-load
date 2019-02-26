@@ -1,6 +1,6 @@
 {
   "name": "vue-images-lazy-load",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Vue plug-in for images lazy loading",
   "keywords": [
     "vue",
