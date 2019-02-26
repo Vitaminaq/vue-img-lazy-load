@@ -9,14 +9,17 @@ import bitmap from './images/bitmap';
 export interface VueRoot extends Vue {
 	$ObserverInview?: ObserverInview;
 }
+const timers:any = {};
 const callback = (entire: IntersectionObserverEntry[]) => {
-	entire.forEach((item: any) => {
+	entire.forEach((item: any, index: number) => {
 		if (item.isIntersecting || item.intersectionRatio > 0) {
 			const src = item.target.getAttribute('data-lazy');
 			if (item.target.src === src) return;
-			const timer = setTimeout(() => {
+			const key = `key${index + 1}`;
+			timers[key] = setTimeout(() => {
 				item.target.src = src;
-				clearTimeout(timer);
+				clearTimeout(timers[key]);
+				delete timers[key];
 			}, 500 + Math.random() * 500);
 		}
 	});
