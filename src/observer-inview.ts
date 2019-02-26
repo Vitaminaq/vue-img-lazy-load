@@ -24,7 +24,10 @@ export default class ObserverInview {
 	 * @param callback
 	 */
 	public createObserver(callback: Callback) {
-		if (typeof IntersectionObserver === 'undefined') {
+		if (typeof IntersectionObserver === 'undefined' ||
+			!('IntersectionObserverEntry' in window) ||
+			!('intersectionRatio' in IntersectionObserverEntry.prototype)
+		) {
 			new IntersectionOberserPolyfill();
 		}
 		this.intersectionObserver = new IntersectionObserver(

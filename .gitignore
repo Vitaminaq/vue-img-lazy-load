@@ -5,6 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 .rpt2_cache
 ./dist
+package-lock.json
 
 # Editor directories and files
 .idea
