@@ -1,10 +1,10 @@
 /**
  * 构造IntersectionObserverEntry类
  */
-var IntersectionObserverEntry = function IntersectionObserverEntry(entry) {
+var IntersectionObserverEntry$1 = function IntersectionObserverEntry(entry) {
     this.init(entry);
 };
-IntersectionObserverEntry.prototype.init = function init (entry) {
+IntersectionObserverEntry$1.prototype.init = function init (entry) {
     this.time = entry.time;
     this.target = entry.target;
     this.rootBounds = entry.rootBounds;
@@ -189,7 +189,7 @@ var IntersectionObserver$1 = /*@__PURE__*/(function (IntersectionObserverPrototy
             var intersectionRect = rootIsInDom &&
                 rootContainsTarget &&
                 this$1._computeTargetAndRootIntersection(target, rootRect);
-            var newEntry = (item.entry = new IntersectionObserverEntry({
+            var newEntry = (item.entry = new IntersectionObserverEntry$1({
                 time: this$1.now(),
                 target: target,
                 boundingClientRect: targetRect,
@@ -463,7 +463,7 @@ IntersectionOberserPolyfill.prototype.polyfillAll = function polyfillAll () {
 };
 IntersectionOberserPolyfill.prototype.injectWindow = function injectWindow () {
     window.IntersectionObserver = IntersectionObserver$1;
-    window.IntersectionObserverEntry = IntersectionObserverEntry;
+    window.IntersectionObserverEntry = IntersectionObserverEntry$1;
 };
 
 // 避免浏览器重排,文档请参照：https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver
@@ -482,7 +482,9 @@ var ObserverInview = function ObserverInview(callback, options) {
  * @param callback
  */
 ObserverInview.prototype.createObserver = function createObserver (callback) {
-    if (typeof IntersectionObserver === 'undefined') {
+    if (typeof IntersectionObserver === 'undefined' ||
+        !('IntersectionObserverEntry' in window) ||
+        !('intersectionRatio' in IntersectionObserverEntry.prototype)) {
         new IntersectionOberserPolyfill();
     }
     this.intersectionObserver = new IntersectionObserver(function (entries) {
@@ -512,9 +514,12 @@ ObserverInview.prototype.remove = function remove () {
 var bitmap = "data:image/png;base64,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";
 
 var timers = {};
+var observerOptions;
+var delayTime;
 var callback = function (entire) {
     entire.forEach(function (item, index) {
-        if (item.isIntersecting || item.intersectionRatio > 0) {
+        if (item.isIntersecting || item.intersectionRatio >
+            observerOptions && observerOptions.threshold || 0) {
             var src = item.target.getAttribute('data-lazy');
             if (item.target.src === src)
                 { return; }
@@ -523,7 +528,7 @@ var callback = function (entire) {
                 item.target.src = src;
                 clearTimeout(timers[key]);
                 delete timers[key];
-            }, 500 + Math.random() * 500);
+            }, delayTime || 500 + Math.random() * 500);
         }
     });
     return;
@@ -531,14 +536,12 @@ var callback = function (entire) {
 /**
  * 观察者类，用于监听dom节点是否可见
  */
-var OberserDom = function OberserDom(el, vnode, options, url) {
+var OberserDom = function OberserDom(el, vnode, url) {
     this.root = {};
-    this.oberserOptions = {};
     this.observerInview = {};
     this.saveDomMessage(el, url);
     this.el = el;
     this.vnode = vnode;
-    this.oberserOptions = options;
     this.subscribeOberser();
 };
 OberserDom.prototype.saveDomMessage = function saveDomMessage (el, url) {
@@ -558,7 +561,7 @@ OberserDom.prototype.subscribeOberser = function subscribeOberser () {
         { return this; }
     this.root = this.vnode.context.$root;
     if (!this.root.$ObserverInview) {
-        this.root.$ObserverInview = new ObserverInview(callback, this.oberserOptions);
+        this.root.$ObserverInview = new ObserverInview(callback, observerOptions);
     }
     this.root.$ObserverInview.subscribe(this.el);
     this.observerInview = this.root.$ObserverInview;
@@ -570,17 +573,8 @@ OberserDom.prototype.destroy = function destroy () {
 };
 var polymerization = function (el, binding, vnode) {
     if (!el.oberserDom) {
-        var oberserOptions = {};
-        var url = '';
-        if (binding.value) {
-            if (binding.value.oberserOptions) {
-                oberserOptions = binding.value.oberserOptions;
-            }
-            if (binding.value.url) {
-                url = binding.value.url;
-            }
-        }
-        el.oberserDom = new OberserDom(el, vnode, oberserOptions, url);
+        var url = binding.value && binding.value.url || '';
+        el.oberserDom = new OberserDom(el, vnode, url);
     }
 };
 var directive = {
@@ -595,9 +589,12 @@ var directive = {
     }
 };
 var VueImgLazyLoad = {
-    install: function install(Vue) {
+    install: function install(Vue, options) {
+        observerOptions = options && options.observerOptions;
+        delayTime = options && options.delayTime;
         Vue.directive('img-lazy-load', directive);
     }
 };
 
 export default VueImgLazyLoad;
+export { directive };

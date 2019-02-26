@@ -1,4 +1,5 @@
 import Vue, { VNode, VueConstructor } from 'vue';
+import { DirectiveBinding } from 'vue/types/options'
 import ObserverInview, { ObserverOptions } from './observer-inview';
 import bitmap from './images/bitmap';
 
@@ -9,10 +10,19 @@ import bitmap from './images/bitmap';
 export interface VueRoot extends Vue {
 	$ObserverInview?: ObserverInview;
 }
+export interface Options {
+	observerOptions: ObserverOptions;
+	delayTime: number;
+}
 const timers:any = {};
+let observerOptions: ObserverOptions;
+let delayTime: number;
+
 const callback = (entire: IntersectionObserverEntry[]) => {
 	entire.forEach((item: any, index: number) => {
-		if (item.isIntersecting || item.intersectionRatio > 0) {
+		if (item.isIntersecting || item.intersectionRatio >
+			observerOptions && observerOptions.threshold || 0
+		) {
 			const src = item.target.getAttribute('data-lazy');
 			if (item.target.src === src) return;
 			const key = `key${index + 1}${item.intersectionRect.top}
@@ -21,7 +31,7 @@ const callback = (entire: IntersectionObserverEntry[]) => {
 				item.target.src = src;
 				clearTimeout(timers[key]);
 				delete timers[key];
-			}, 500 + Math.random() * 500);
+			}, delayTime || 500 + Math.random() * 500);
 		}
 	});
 	return;
@@ -33,18 +43,15 @@ class OberserDom {
 	public el: DirectiveHTMLElement;
 	public vnode: VNode;
 	public root: VueRoot = {} as VueRoot;
-	private oberserOptions: ObserverOptions = {};
 	public observerInview: ObserverInview = {} as ObserverInview;
 	constructor(
 		el: DirectiveHTMLElement,
 		vnode: VNode,
-		options: ObserverOptions,
 		url: string
 	) {
 		this.saveDomMessage(el, url);
 		this.el = el;
 		this.vnode = vnode;
-		this.oberserOptions = options;
 		this.subscribeOberser();
 	}
 	public saveDomMessage(el: DirectiveHTMLElement, url: string): this {
@@ -63,7 +70,7 @@ class OberserDom {
 		if (!this.root.$ObserverInview) {
 			this.root.$ObserverInview = new ObserverInview(
 				callback,
-				this.oberserOptions
+				observerOptions
 			);
 		}
 		this.root.$ObserverInview.subscribe(this.el);
@@ -82,7 +89,6 @@ export interface DirectiveHTMLElement extends HTMLImageElement {
 }
 
 export interface Value {
-	oberserOptions?: ObserverOptions;
 	url: string;
 }
 export interface Binding {
@@ -91,27 +97,19 @@ export interface Binding {
 
 const polymerization = (
 	el: DirectiveHTMLElement,
-	binding: Binding,
+	binding: DirectiveBinding,
 	vnode: VNode
 ) => {
 	if (!el.oberserDom) {
-		let oberserOptions = {};
-		let url = '';
-		if (binding.value) {
-			if (binding.value.oberserOptions) {
-				oberserOptions = binding.value.oberserOptions;
-			}
-			if (binding.value.url) {
-				url = binding.value.url;
-			}
-		}
-		el.oberserDom = new OberserDom(el, vnode, oberserOptions, url);
+		const url = binding.value && binding.value.url || '';
+		el.oberserDom = new OberserDom(el, vnode, url);
 	}
 };
-const directive: any = {
+
+export const directive: any = {
 	bind: function(
 		el: DirectiveHTMLElement,
-		binding: Binding,
+		binding: DirectiveBinding,
 		vnode: VNode
 	) {
 		polymerization(el, binding, vnode);
@@ -124,7 +122,9 @@ const directive: any = {
 };
 
 const VueImgLazyLoad = {
-	install(Vue: VueConstructor) {
+	install(Vue: VueConstructor, options: Options) {
+		observerOptions = options && options.observerOptions;
+		delayTime = options && options.delayTime;
 		Vue.directive('img-lazy-load', directive);
 	}
 };

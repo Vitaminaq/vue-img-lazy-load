@@ -1,3 +1,3 @@
-import VueImgLazyLoad from './vue-img-lazy-load';
-
+import VueImgLazyLoad, { directive } from './vue-img-lazy-load';
+export { directive };
 export default VueImgLazyLoad;
