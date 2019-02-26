@@ -1,7 +1,7 @@
 为了提升页面响应速度，优化用户体验，可以适当的减轻页面首次加载的压力，可以使用图片懒加载。  
 In order to improve the page response speed and optimize the user experience, it can reduce the pressure of the first page loading appropriately. You can use the image lazy loading.
 </br>
-![https://img.shields.io/npm/v/vue-images-lazy-load.svg?label=vue-images-lazy-load](https://img.shields.io/npm/v/vue-images-lazy-load.svg?label=vue-images-lazy-load)  ![总下载量](https://img.shields.io/npm/dt/vue-images-lazy-load.svg)
+[![https://img.shields.io/npm/v/vue-images-lazy-load.svg?label=vue-images-lazy-load](https://img.shields.io/npm/v/vue-images-lazy-load.svg?label=vue-images-lazy-load)](https://www.npmjs.com/package/vue-images-lazy-load)  ![总下载量](https://img.shields.io/npm/dt/vue-images-lazy-load.svg)
     
 ### 安装/Install
 ```bash
