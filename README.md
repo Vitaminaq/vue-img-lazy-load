@@ -25,7 +25,12 @@ Vue.use(VueImgLazyLoader, {
 ##### options
 * oberserOptions: 观察者参数配置。  
 rootMargin：可以区域范围，比如："0px 0px -100px 0px",则为元素超出视窗底部100px被视为可见；默认'0px'  
-threshold(0-1)： 元素达到视窗设置的rootMargin，还要加上自身的百分比被视为可见；默认0
+threshold(0-1)： 元素达到视窗设置的rootMargin，还要加上自身的百分比被视为可见；默认0  
+* delayTime :给图片添加延时加载的时间,default: (500 + Math.random() * 500)  
+* oberserOptions: observer parameter configuration.  
+rootMargin：areas such as "0px 0px-100px 0px" are considered visible if the element exceeds 100px at the bottom of the window; default is'0px'.   
+threshold(0-1)：elements that reach the rootMargin of the window settings, plus their own percentages, are considered visible; default 0  
+* delayTime : add a delay loading time to the picture,default: (500 + Math.random() * 500)
 #### tips
 最开始的名字有冲突，所以使用了vue-images-lazy-load  
 The initial name was conflicting, so vue-images-lazy-load was used.  
