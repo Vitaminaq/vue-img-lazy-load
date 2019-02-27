@@ -1,6 +1,6 @@
 {
   "name": "vue-images-lazy-load",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Vue plug-in for images lazy loading",
   "keywords": [
     "vue",
@@ -12,7 +12,7 @@
   "private": false,
   "main": "dist/vue-img-lazy-load-common.js",
   "module": "dist/vue-img-lazy-load-esm.js",
-  "unpkg": "dist/vue-img-lazy-load.js",
+  "unpkg": "dist/vue-img-lazy-load-min.js",
   "scripts": {
     "build": "rollup --config rollup.config.js"
   },

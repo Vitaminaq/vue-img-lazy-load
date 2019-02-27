@@ -8,6 +8,7 @@ const plugins = [
     tsconfig: "tsconfig.json",
     clean: true,
   }),
+  terser(),
   buble({  // transpile ES2015+ to ES5
     exclude: ['node_modules/**']
   }),
@@ -21,7 +22,9 @@ export default [
     input: 'src/index.ts',
     output: {
       file: 'dist/vue-img-lazy-load-common.js',
-      format: 'cjs'
+      format: 'cjs',
+      exports: 'named',
+      name: 'VueImgLazyLoad'
     },
     plugins
   },
@@ -36,22 +39,11 @@ export default [
   {
     input: 'src/index.ts',
     output: {
-      file: 'dist/vue-img-lazy-load.js',
+      file: 'dist/vue-img-lazy-load-min.js',
       format: 'umd',
+      exports: 'named',
       name: 'VueImgLazyLoad'
     },
     plugins
-  },
-  {
-    input: 'src/index.ts',
-    output: {
-      file: 'dist/vue-img-lazy-load-min.js',
-      format: 'umd',
-      name: 'VueImgLazyLoad'
-    },
-    plugins: [
-      ...plugins,
-      terser()
-    ]
   }
 ];
