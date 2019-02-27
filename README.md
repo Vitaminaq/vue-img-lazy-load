@@ -23,7 +23,7 @@ Vue.use(VueImgLazyLoader, {
 });
 ```
 ##### options
-* oberserOptions: 观察者参数配置。
+* oberserOptions: 观察者参数配置。  
 rootMargin：可以区域范围，比如："0px 0px -100px 0px",则为元素超出视窗底部100px被视为可见；默认'0px'  
 threshold(0-1)： 元素达到视窗设置的rootMargin，还要加上自身的百分比被视为可见；默认0  
 最开始的名字有冲突，所以使用了vue-images-lazy-load  
