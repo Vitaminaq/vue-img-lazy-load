@@ -26,7 +26,7 @@ const callback = (entire: IntersectionObserverEntry[]) => {
 			const src = item.target.getAttribute('data-lazy');
 			if (item.target.src === src) return;
 			const key = `key${index + 1}${item.intersectionRect.top}
-			    ${item.intersectionRect.y}${item.time}`;
+				${item.intersectionRect.bottom}${item.time}`;
 			timers[key] = setTimeout(() => {
 				item.target.src = src;
 				clearTimeout(timers[key]);
@@ -67,6 +67,10 @@ class OberserDom {
 	public subscribeOberser(): this {
 		if (!this.vnode.context || !this.vnode.context.$root) return this;
 		this.root = this.vnode.context.$root;
+		let options = {};
+		Object.assign(options, observerOptions, {
+			root: this.vnode.context.$root.$el
+		});
 		if (!this.root.$ObserverInview) {
 			this.root.$ObserverInview = new ObserverInview(
 				callback,

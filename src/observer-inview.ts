@@ -14,6 +14,7 @@ export default class ObserverInview {
 		threshold: 0
 	};
 	public intersectionObserver: IntersectionObserver = {} as IntersectionObserver;
+	public intersectionOberserPolyfill: IntersectionOberserPolyfill = {} as IntersectionOberserPolyfill;
 	public root: any;
 	public constructor(callback: Callback, options?: ObserverOptions) {
 		Object.assign(this.options, options);
@@ -24,12 +25,7 @@ export default class ObserverInview {
 	 * @param callback
 	 */
 	public createObserver(callback: Callback) {
-		if (typeof IntersectionObserver === 'undefined' ||
-			!('IntersectionObserverEntry' in window) ||
-			!('intersectionRatio' in IntersectionObserverEntry.prototype)
-		) {
-			new IntersectionOberserPolyfill();
-		}
+		this.intersectionOberserPolyfill = new IntersectionOberserPolyfill();
 		this.intersectionObserver = new IntersectionObserver(
 			(entries: IntersectionObserverEntry[]) => {
 				return callback(entries);
@@ -55,5 +51,6 @@ export default class ObserverInview {
 	public remove() {
 		this.intersectionObserver.disconnect();
 		delete this.intersectionObserver;
+		delete this.intersectionOberserPolyfill;
 	}
 }
