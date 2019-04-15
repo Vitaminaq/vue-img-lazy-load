@@ -1,5 +1,5 @@
 import Vue, { VNode, VueConstructor } from 'vue';
-import { DirectiveBinding } from 'vue/types/options'
+import { DirectiveBinding } from 'vue/types/options';
 import ObserverInview, { ObserverOptions } from './observer-inview';
 import bitmap from './images/bitmap';
 
@@ -14,14 +14,17 @@ export interface Options {
 	observerOptions: ObserverOptions;
 	delayTime: number;
 }
-const timers:any = {};
+const timers: any = {};
 let observerOptions: ObserverOptions;
 let delayTime: number;
 
 const callback = (entire: IntersectionObserverEntry[]) => {
 	entire.forEach((item: any, index: number) => {
-		if (item.isIntersecting || item.intersectionRatio >
-			observerOptions && observerOptions.threshold || 0
+		if (
+			item.isIntersecting ||
+			(item.intersectionRatio > observerOptions &&
+				observerOptions.threshold) ||
+			0
 		) {
 			const src = item.target.getAttribute('data-lazy');
 			if (item.target.src === src) return;
@@ -35,7 +38,7 @@ const callback = (entire: IntersectionObserverEntry[]) => {
 		}
 	});
 	return;
-}
+};
 /**
  * 观察者类，用于监听dom节点是否可见
  */
@@ -44,18 +47,13 @@ class OberserDom {
 	public vnode: VNode;
 	public root: VueRoot = {} as VueRoot;
 	public observerInview: ObserverInview = {} as ObserverInview;
-	constructor(
-		el: DirectiveHTMLElement,
-		vnode: VNode,
-		url: string
-	) {
+	constructor(el: DirectiveHTMLElement, vnode: VNode, url: string) {
 		this.saveDomMessage(el, url);
 		this.el = el;
 		this.vnode = vnode;
 		this.subscribeOberser();
 	}
 	public saveDomMessage(el: DirectiveHTMLElement, url: string): this {
-		if (el.tagName !== 'IMG') throw new Error('this dom is not img');
 		el.setAttribute('data-lazy', el.src);
 		if (url) {
 			el.src = url;
@@ -105,17 +103,23 @@ const polymerization = (
 	vnode: VNode
 ) => {
 	if (!el.oberserDom) {
-		const url = binding.value && binding.value.url || '';
+		const url = (binding.value && binding.value.url) || '';
 		el.oberserDom = new OberserDom(el, vnode, url);
 	}
 };
 
 export const directive: any = {
-	bind: function(
+	inserted: function(
 		el: DirectiveHTMLElement,
 		binding: DirectiveBinding,
 		vnode: VNode
 	) {
+		if (!/.(jpg|gif|png|jepg)/g.test(el.src)) {
+			console.warn('this src is not img address');
+			return;
+		}
+		if (el.tagName.toLocaleLowerCase() !== 'img')
+			throw new Error('this dom is not img');
 		polymerization(el, binding, vnode);
 	},
 	unbind(el: DirectiveHTMLElement) {
