@@ -34,7 +34,7 @@ const callback = (entire: IntersectionObserverEntry[]) => {
 				item.target.src = src;
 				clearTimeout(timers[key]);
 				delete timers[key];
-			}, delayTime || 500 + Math.random() * 500);
+			}, delayTime || Math.random() * 500);
 		}
 	});
 	return;
