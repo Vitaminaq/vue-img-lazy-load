@@ -13,10 +13,12 @@ export interface VueRoot extends Vue {
 export interface Options {
 	observerOptions: ObserverOptions;
 	delayTime: number;
+	lazyImg: string;
 }
 const timers: any = {};
 let observerOptions: ObserverOptions;
 let delayTime: number;
+let lazyImg: string = '';
 
 const callback = (entire: IntersectionObserverEntry[]) => {
 	entire.forEach((item: any, index: number) => {
@@ -104,7 +106,7 @@ const polymerization = (
 ) => {
 	if (!el.oberserDom) {
 		const url = (binding.value && binding.value.url) || '';
-		el.oberserDom = new OberserDom(el, vnode, url);
+		el.oberserDom = new OberserDom(el, vnode, url || lazyImg);
 	}
 };
 
@@ -133,6 +135,7 @@ const VueImgLazyLoad = {
 	install(Vue: VueConstructor, options: Options) {
 		observerOptions = options && options.observerOptions;
 		delayTime = options && options.delayTime;
+		lazyImg = options && options.lazyImg;
 		Vue.directive('img-lazy-load', directive);
 	}
 };
