@@ -19,18 +19,21 @@ Vue.use(VueImgLazyLoader, {
 	rootMargin: '0px 0px -400px 0px',
 	threshold: 0.5
     },
-    delayTime: 1000
+    delayTime: 1000,
+    lazyImg: 'image-url'
 });
 ```
 ##### options
 * oberserOptions: 观察者参数配置。  
 rootMargin：可以区域范围，比如："0px 0px -100px 0px",则为元素超出视窗底部100px被视为可见；默认'0px'  
 threshold(0-1)： 元素达到视窗设置的rootMargin，还要加上自身的百分比被视为可见；默认0  
-* delayTime :给图片添加延时加载的时间,default: (Math.random() * 500)  
+* delayTime :给图片添加延时加载的时间,default: (Math.random() * 500)
+* lazyImg : 图片资源同下
 * oberserOptions: observer parameter configuration.  
 rootMargin：areas such as "0px 0px-100px 0px" are considered visible if the element exceeds 100px at the bottom of the window; default is'0px'.   
 threshold(0-1)：elements that reach the rootMargin of the window settings, plus their own percentages, are considered visible; default 0  
 * delayTime : add a delay loading time to the picture,default: (500 + Math.random() * 500)
+* lazyImg : image
 #### tips
 最开始的名字有冲突，所以使用了vue-images-lazy-load  
 The initial name was conflicting, so vue-images-lazy-load was used.  
@@ -47,8 +50,9 @@ directives: {
 <img :src="baseUrl" v-img-lazy-load />
 ```
 #### 参数配置/Parameter configuration
-* url:替换插件默认的展位图，格式请用base64格式，或者提起解析好的(require,import)，或者cdn地址  
+* url:替换插件默认的展位图，格式请用base64格式，或者提起解析好的(require,import)，或者cdn地址，如果全局注册的时候有传入，这里可以不用传了。
 url: Replace the default booth map of the plug-in, in base64 format, or mention parsed(require,import) or CDN address.
+If there is an incoming message during global registration, there is no need to send it here.
 ```html
 <img :src="baseUrl" v-img-lazy-load="{url: ''}" />
 ```
